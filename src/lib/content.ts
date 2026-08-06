@@ -28,7 +28,15 @@ export const site = {
   linkedin: "https://www.linkedin.com/",
   resumePath: "/Muhammad-Rafay-Khan-Resume.pdf",
   availability: "Open to Summer 2026 internships",
+  /**
+   * Drop a square-ish photo in `/public` and set this to e.g. "/portrait.jpg".
+   * While it's `null` the hero renders a designed monogram card instead.
+   */
+  portrait: null as string | null,
 } as const;
+
+export const heroLede =
+  "I'm a Financial Technology undergraduate in Karachi who writes Python, reads balance sheets, and is far more interested in the software eating banking than in the banking itself. Currently in my 5th semester and looking for the internship where I get to build something real.";
 
 /* ------------------------------------------------------------------- nav */
 
@@ -41,6 +49,9 @@ export const navLinks = [
   { id: "goals", label: "Goals" },
   { id: "contact", label: "Contact" },
 ] as const;
+
+/** Stable array reference for the active-section observer. */
+export const navSectionIds: readonly string[] = navLinks.map((l) => l.id);
 
 /* ------------------------------------------------------------------ hero */
 

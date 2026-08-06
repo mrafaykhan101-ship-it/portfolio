@@ -1,5 +1,11 @@
 import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono, Instrument_Serif } from "next/font/google";
+import { Backdrop } from "@/components/background/Backdrop";
+import { Footer } from "@/components/layout/Footer";
+import { Navbar } from "@/components/layout/Navbar";
+import { Preloader } from "@/components/layout/Preloader";
+import { ScrollProgress } from "@/components/layout/ScrollProgress";
+import { SmoothScroll } from "@/components/providers/SmoothScroll";
 import { site } from "@/lib/content";
 import "./globals.css";
 
@@ -126,7 +132,27 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           // Static, author-controlled JSON — no user input reaches this string.
           dangerouslySetInnerHTML={{ __html: JSON.stringify(personSchema) }}
         />
-        {children}
+
+        <SmoothScroll>
+          <a
+            href="#main"
+            className="sr-only-focusable top-4 left-4 z-100 rounded-full bg-iris-500 px-5 py-2.5 text-sm font-medium text-white"
+          >
+            Skip to content
+          </a>
+
+          <Backdrop />
+          <ScrollProgress />
+          <Navbar />
+
+          <div id="top" />
+          <main id="main" className="relative">
+            {children}
+          </main>
+
+          <Footer />
+          <Preloader />
+        </SmoothScroll>
       </body>
     </html>
   );
