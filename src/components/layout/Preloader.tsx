@@ -100,6 +100,7 @@ export function Preloader() {
   return (
     <div
       ref={rootRef}
+      data-preloader
       role="status"
       aria-live="polite"
       aria-label="Loading portfolio"

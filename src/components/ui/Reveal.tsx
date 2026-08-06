@@ -1,15 +1,16 @@
 "use client";
 
 import { motion, useReducedMotion, type Variants } from "motion/react";
-import type { ReactNode } from "react";
-import { EASE_EXPO, viewportOnce } from "@/lib/motion";
+import { useRef, type ReactNode } from "react";
+import { EASE_EXPO } from "@/lib/motion";
+import { useInViewport } from "@/hooks/useInViewport";
 
 type RevealProps = {
   children: ReactNode;
   className?: string;
   /** Seconds to wait after the element enters the viewport. */
   delay?: number;
-  /** Travel distance in px. Negative values come from below. */
+  /** Travel distance in px. Positive rises from below. */
   y?: number;
   x?: number;
   duration?: number;
@@ -17,11 +18,16 @@ type RevealProps = {
 };
 
 /**
- * Scroll-triggered entrance. Every section on the site uses this so the
- * page reveals itself with one consistent motion, not six different ones.
+ * Scroll-triggered entrance used by every section, so the whole page reveals
+ * itself with one consistent motion.
  *
- * When the visitor prefers reduced motion the content renders immediately
- * with no transform, no blur and no delay.
+ * Reveal is driven by {@link useInViewport} (geometry, not IntersectionObserver)
+ * and controlled through the `animate` prop rather than `whileInView`. That
+ * makes it reliable in non-compositing contexts and gives deterministic
+ * parent→child propagation for staggered lists.
+ *
+ * Reduced-motion visitors get the content immediately, with no transform or
+ * blur.
  */
 export function Reveal({
   children,
@@ -33,6 +39,8 @@ export function Reveal({
   as = "div",
 }: RevealProps) {
   const reduce = useReducedMotion();
+  const ref = useRef<HTMLElement>(null);
+  const inView = useInViewport(ref);
   const MotionTag = motion[as];
 
   if (reduce) {
@@ -53,11 +61,11 @@ export function Reveal({
 
   return (
     <MotionTag
+      ref={ref as never}
       className={className}
       variants={variants}
       initial="hidden"
-      whileInView="visible"
-      viewport={viewportOnce}
+      animate={inView ? "visible" : "hidden"}
     >
       {children}
     </MotionTag>
@@ -81,6 +89,8 @@ export function Stagger({
   as = "div",
 }: StaggerProps) {
   const reduce = useReducedMotion();
+  const ref = useRef<HTMLElement>(null);
+  const inView = useInViewport(ref);
   const MotionTag = motion[as];
 
   if (reduce) {
@@ -90,10 +100,10 @@ export function Stagger({
 
   return (
     <MotionTag
+      ref={ref as never}
       className={className}
       initial="hidden"
-      whileInView="visible"
-      viewport={viewportOnce}
+      animate={inView ? "visible" : "hidden"}
       variants={{
         hidden: {},
         visible: { transition: { staggerChildren: gap, delayChildren: delay } },
@@ -108,9 +118,10 @@ type StaggerItemProps = {
   children: ReactNode;
   className?: string;
   y?: number;
-  as?: "div" | "li" | "span" | "article";
+  as?: "div" | "li" | "span" | "article" | "p";
 };
 
+/** Child of {@link Stagger}; inherits the parent's visible/hidden state. */
 export function StaggerItem({
   children,
   className,

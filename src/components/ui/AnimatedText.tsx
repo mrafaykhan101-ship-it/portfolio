@@ -1,8 +1,10 @@
 "use client";
 
 import { motion, useReducedMotion } from "motion/react";
+import { useRef } from "react";
 import { cn } from "@/lib/utils";
-import { EASE_EXPO, viewportOnce } from "@/lib/motion";
+import { EASE_EXPO } from "@/lib/motion";
+import { useInViewport } from "@/hooks/useInViewport";
 
 type AnimatedTextProps = {
   text: string;
@@ -30,6 +32,8 @@ export function AnimatedText({
   highlightClassName,
 }: AnimatedTextProps) {
   const reduce = useReducedMotion();
+  const ref = useRef<HTMLSpanElement>(null);
+  const inView = useInViewport(ref, { margin: 40 });
   const words = text.split(" ");
 
   if (reduce) {
@@ -49,14 +53,13 @@ export function AnimatedText({
   }
 
   return (
-    <span className={className}>
+    <span ref={ref} className={className}>
       <span className="sr-only">{text.replaceAll("*", "")}</span>
       <motion.span
         aria-hidden
         className="inline"
         initial="hidden"
-        whileInView="visible"
-        viewport={viewportOnce}
+        animate={inView ? "visible" : "hidden"}
         variants={{
           hidden: {},
           visible: { transition: { staggerChildren: stagger, delayChildren: delay } },

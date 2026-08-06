@@ -133,6 +133,14 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(personSchema) }}
         />
 
+        {/* No-JS safety net. Motion server-renders entrance states as inline
+            opacity:0, and the preloader only dismisses via script — without
+            this, a JS-disabled visitor would see a blank page. Scoped to
+            <noscript>, so it never touches the scripted experience. */}
+        <noscript>
+          <style>{`[data-preloader]{display:none!important}[style*="opacity:0"]{opacity:1!important;filter:none!important;transform:none!important}`}</style>
+        </noscript>
+
         <SmoothScroll>
           <a
             href="#main"

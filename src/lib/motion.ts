@@ -55,6 +55,3 @@ export const stagger = (staggerChildren = 0.07, delayChildren = 0): Variants => 
   hidden: {},
   visible: { transition: { staggerChildren, delayChildren } },
 });
-
-/** Shared viewport config so every section triggers at the same point. */
-export const viewportOnce = { once: true, amount: 0.15, margin: "0px 0px -80px 0px" } as const;
