@@ -5,8 +5,7 @@ import {
   ArrowUpRight,
   BarChart3,
   BrainCircuit,
-  Code2,
-  GraduationCap,
+  Database,
   Landmark,
   Lock,
   Sparkles,
@@ -18,12 +17,11 @@ import type { Project } from "@/lib/content";
 import { cn } from "@/lib/utils";
 
 /** Category → glyph for the generated cover art. */
-const categoryIcon: Record<string, typeof Code2> = {
-  Python: Code2,
+const categoryIcon: Record<string, typeof BarChart3> = {
   "Machine Learning": BrainCircuit,
   FinTech: Landmark,
   "Data Analysis": BarChart3,
-  University: GraduationCap,
+  Databases: Database,
 };
 
 const statusLabel: Record<Project["status"], string> = {
@@ -124,6 +122,18 @@ export function ProjectCard({ project }: { project: Project }) {
         >
           {project.category}
         </span>
+
+        {/* Headline metric — the one number worth reading first */}
+        {project.metric && (
+          <div className="absolute bottom-3 left-3 flex items-baseline gap-2">
+            <span className={cn("text-2xl font-semibold tracking-tight", accent.text)}>
+              {project.metric.value}
+            </span>
+            <span className="text-[0.6875rem] font-medium text-mist-300">
+              {project.metric.label}
+            </span>
+          </div>
+        )}
       </div>
 
       {/* Body */}
