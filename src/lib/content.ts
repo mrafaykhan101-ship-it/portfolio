@@ -72,9 +72,9 @@ export const heroStats = [
     detail: "BS FinTech · MAJU Karachi",
   },
   {
-    value: "5",
-    label: "Academic projects",
-    detail: "ML · finance · data · databases",
+    value: "Google",
+    label: "Certified",
+    detail: "Data Analytics Professional",
   },
   {
     value: "2.03",
@@ -97,6 +97,10 @@ export const about = {
     {
       title: "Machine learning on real data",
       body: "Random Forests, regression and KNN in Python — feature engineering, walk-forward validation and SHAP-based interpretation, not just fitting a model and hoping.",
+    },
+    {
+      title: "Google-certified analyst",
+      body: "Completed the Google Data Analytics Professional Certificate, plus the Advanced Data Analytics capstone — the full pipeline from dirty data to a defensible answer.",
     },
     {
       title: "Financial fluency",
@@ -502,12 +506,12 @@ export const achievements: Achievement[] = [
     accent: "iris",
   },
   {
-    metric: "5",
-    label: "Academic projects shipped",
-    context: "ML, finance, data & databases",
+    metric: "8",
+    label: "Google certifications",
+    context: "Data Analytics Professional Certificate",
     detail:
-      "A growing body of applied work bridging the financial and engineering halves of the degree.",
-    accent: "mint",
+      "The full Google Data Analytics track plus the Advanced Data Analytics capstone — all publicly verifiable below.",
+    accent: "aqua",
   },
 ];
 
@@ -518,9 +522,9 @@ export const achievementsPipeline = [
     stage: "In progress",
   },
   {
-    title: "Python for Data Analysis certification",
-    detail: "Formalising the pandas and scikit-learn work into a credential.",
-    stage: "Next",
+    title: "Google Advanced Data Analytics",
+    detail: "Completing the full advanced track — regression, statistics and ML in Python.",
+    stage: "In progress",
   },
   {
     title: "First open-source contribution",
@@ -533,6 +537,65 @@ export const achievementsPipeline = [
     stage: "Planned",
   },
 ] as const;
+
+/* -------------------------------------------------------- certifications */
+
+export type Certification = {
+  name: string;
+  issuer: string;
+  /** Public Coursera verification link. */
+  credentialUrl: string;
+  /** The umbrella credential is surfaced above the individual courses. */
+  headline?: boolean;
+};
+
+/**
+ * Verified credentials. Every entry links to its public Coursera
+ * verification page, so a recruiter can confirm it in one click.
+ */
+export const certifications: Certification[] = [
+  {
+    name: "Google Data Analytics Professional Certificate",
+    issuer: "Google · Coursera",
+    credentialUrl: "https://coursera.org/share/7ee0efed5dd8d4a81171016d325d2863",
+    headline: true,
+  },
+  {
+    name: "Google Advanced Data Analytics Capstone",
+    issuer: "Google · Coursera",
+    credentialUrl: "https://coursera.org/share/63d987ead765fbd94be1457ccf08cec8",
+  },
+  {
+    name: "Google Data Analytics Capstone: Complete a Case Study",
+    issuer: "Google · Coursera",
+    credentialUrl: "https://coursera.org/share/f243dd5a480d80372cf58f5fe9617a55",
+  },
+  {
+    name: "Analyze Data to Answer Questions",
+    issuer: "Google · Coursera",
+    credentialUrl: "https://coursera.org/share/2ded61c17f244fdd93de058308711f45",
+  },
+  {
+    name: "Process Data from Dirty to Clean",
+    issuer: "Google · Coursera",
+    credentialUrl: "https://coursera.org/share/14fbeabd220fcc3c99518518af303ad6",
+  },
+  {
+    name: "Prepare Data for Exploration",
+    issuer: "Google · Coursera",
+    credentialUrl: "https://coursera.org/share/d69a8982069636997c8ffb6aef6eb01d",
+  },
+  {
+    name: "Ask Questions to Make Data-Driven Decisions",
+    issuer: "Google · Coursera",
+    credentialUrl: "https://coursera.org/share/7db7d46c52eaec085cc969baa9351acf",
+  },
+  {
+    name: "Foundations: Data, Data, Everywhere",
+    issuer: "Google · Coursera",
+    credentialUrl: "https://coursera.org/share/a95d24ad237831d5eeecf035fc8bf810",
+  },
+];
 
 /* ----------------------------------------------------------------- goals */
 
