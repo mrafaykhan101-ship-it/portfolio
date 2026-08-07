@@ -6,12 +6,12 @@ import { achievements, achievementsPipeline, certifications } from "@/lib/conten
 import { accentStyles } from "@/lib/accents";
 import { cn } from "@/lib/utils";
 
-export function Achievements() {
+export function Achievements({ divider = false }: { divider?: boolean }) {
   const headline = certifications.find((c) => c.headline);
   const courses = certifications.filter((c) => !c.headline);
 
   return (
-    <Section id="achievements">
+    <Section id="achievements" divider={divider}>
       <SectionHeading
         eyebrow="Achievements"
         title={

@@ -2,10 +2,11 @@
 
 import { AnimatePresence, motion, useMotionValueEvent, useScroll } from "motion/react";
 import { ArrowUpRight, Mail, Menu, X } from "lucide-react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { GithubIcon, LinkedinIcon } from "@/components/ui/BrandIcons";
 import { useEffect, useRef, useState } from "react";
-import { navLinks, navSectionIds, site } from "@/lib/content";
-import { useActiveSection } from "@/hooks/useActiveSection";
+import { navLinks, site } from "@/lib/content";
 import { useSmoothScroll } from "@/components/providers/SmoothScroll";
 import { Button } from "@/components/ui/Button";
 import { EASE_EXPO } from "@/lib/motion";
@@ -14,7 +15,7 @@ import { cn } from "@/lib/utils";
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
-  const active = useActiveSection(navSectionIds);
+  const pathname = usePathname();
   const { setLocked } = useSmoothScroll();
   const { scrollY } = useScroll();
   const toggleRef = useRef<HTMLButtonElement>(null);
@@ -47,6 +48,7 @@ export function Navbar() {
     return () => document.removeEventListener("keydown", onKey);
   }, [open]);
 
+
   return (
     <>
       <header
@@ -65,8 +67,8 @@ export function Navbar() {
           )}
         >
           {/* Wordmark */}
-          <a
-            href="#top"
+          <Link
+            href="/"
             className="group flex items-center gap-2.5 rounded-full py-1 pr-3 text-mist-50"
           >
             <span className="relative grid size-8 shrink-0 place-items-center overflow-hidden rounded-xl bg-linear-to-br from-iris-500 to-iris-600 text-[0.6875rem] font-bold tracking-tight text-white shadow-[0_6px_20px_-8px_var(--color-iris-500)]">
@@ -80,17 +82,17 @@ export function Navbar() {
               Rafay Khan
             </span>
             <span className="sr-only sm:hidden">{site.name} — home</span>
-          </a>
+          </Link>
 
           {/* Desktop links */}
           <ul className="hidden items-center gap-0.5 lg:flex">
             {navLinks.map((link) => {
-              const isActive = active === link.id;
+              const isActive = pathname === `/${link.id}`;
               return (
                 <li key={link.id}>
-                  <a
-                    href={`#${link.id}`}
-                    aria-current={isActive ? "true" : undefined}
+                  <Link
+                    href={`/${link.id}`}
+                    aria-current={isActive ? "page" : undefined}
                     className={cn(
                       "relative block rounded-full px-3.5 py-2 text-sm font-medium transition-colors duration-300",
                       isActive
@@ -107,7 +109,7 @@ export function Navbar() {
                       />
                     )}
                     {link.label}
-                  </a>
+                  </Link>
                 </li>
               );
             })}
@@ -116,7 +118,7 @@ export function Navbar() {
           {/* Actions */}
           <div className="flex items-center gap-2">
             <Button
-              href="#contact"
+              href="/contact"
               size="sm"
               variant="primary"
               magnetic={false}
@@ -189,16 +191,22 @@ export function Navbar() {
                     }}
                     className="border-b border-mist-50/6"
                   >
-                    <a
-                      href={`#${link.id}`}
+                    <Link
+                      href={`/${link.id}`}
                       onClick={() => setOpen(false)}
-                      className="flex items-baseline justify-between py-4 text-2xl font-medium tracking-tight text-mist-100 transition-colors hover:text-mist-50"
+                      aria-current={pathname === `/${link.id}` ? "page" : undefined}
+                      className={cn(
+                        "flex items-baseline justify-between py-4 text-2xl font-medium tracking-tight transition-colors",
+                        pathname === `/${link.id}`
+                          ? "text-iris-300"
+                          : "text-mist-100 hover:text-mist-50",
+                      )}
                     >
                       {link.label}
                       <span className="font-mono text-xs text-mist-500">
                         {String(i + 1).padStart(2, "0")}
                       </span>
-                    </a>
+                    </Link>
                   </motion.li>
                 ))}
               </ul>
@@ -210,7 +218,7 @@ export function Navbar() {
                 className="mt-8 pb-10"
               >
                 <Button
-                  href="#contact"
+                  href="/contact"
                   onClick={() => setOpen(false)}
                   size="lg"
                   magnetic={false}

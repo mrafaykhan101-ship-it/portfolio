@@ -6,14 +6,22 @@ type SectionProps = {
   id: string;
   children: ReactNode;
   className?: string;
-  /** Renders a fading hairline across the top of the band. */
+  /**
+   * Fading hairline across the top of the band. Off by default: each route
+   * now renders a single section, so a divider is only wanted where two
+   * sections actually stack on one page.
+   */
   divider?: boolean;
 };
 
 /** Standard page band: consistent id anchor, gutter and vertical rhythm. */
-export function Section({ id, children, className, divider = true }: SectionProps) {
+export function Section({ id, children, className, divider = false }: SectionProps) {
   return (
-    <section id={id} className={cn("relative section-y", className)}>
+    <section
+      id={id}
+      // Extra top padding clears the fixed navbar on a route's first section.
+      className={cn("relative section-y scroll-mt-28 pt-28 md:pt-36", className)}
+    >
       {divider && (
         <div aria-hidden className="absolute inset-x-0 top-0 h-px hairline" />
       )}

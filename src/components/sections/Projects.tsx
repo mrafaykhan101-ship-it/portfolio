@@ -1,6 +1,7 @@
 "use client";
 
 import { AnimatePresence, LayoutGroup, motion, useReducedMotion } from "motion/react";
+import Link from "next/link";
 import { useMemo, useState } from "react";
 import { Section, SectionHeading } from "@/components/ui/Section";
 import { Reveal } from "@/components/ui/Reveal";
@@ -113,12 +114,12 @@ export function Projects() {
       <Reveal delay={0.1} className="mt-8">
         <p className="text-center text-sm text-mist-500">
           Happy to walk through the methodology or share code for any of these —{" "}
-          <a
-            href="#contact"
+          <Link
+            href="/contact"
             className="font-medium text-mist-300 underline decoration-mist-50/20 underline-offset-4 transition-colors hover:text-mist-50 hover:decoration-iris-400"
           >
             just ask
-          </a>
+          </Link>
           .
         </p>
       </Reveal>

@@ -79,7 +79,7 @@ export function Hero() {
 
           <motion.div {...anim(0.7)} className="mt-10 flex flex-wrap items-center gap-3">
             <Button
-              href="#projects"
+              href="/projects"
               size="lg"
               trailing={
                 <ArrowUpRight
@@ -157,8 +157,8 @@ export function Hero() {
 
       {/* ------------------------------------------------- scroll cue */}
       <motion.a
-        href="#about"
-        aria-label="Scroll to about section"
+        href="#explore"
+        aria-label="Scroll to explore the site"
         initial={reduce ? undefined : { opacity: 0 }}
         animate={reduce ? undefined : { opacity: 1 }}
         transition={{ duration: 0.8, delay: 1.2 }}

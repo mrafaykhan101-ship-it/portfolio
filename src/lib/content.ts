@@ -52,8 +52,8 @@ export const navLinks = [
   { id: "contact", label: "Contact" },
 ] as const;
 
-/** Stable array reference for the active-section observer. */
-export const navSectionIds: readonly string[] = navLinks.map((l) => l.id);
+/** Route path for a nav entry. */
+export const navHref = (id: string) => `/${id}`;
 
 /* ------------------------------------------------------------------ hero */
 

@@ -154,7 +154,6 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           <ScrollProgress />
           <Navbar />
 
-          <div id="top" />
           <main id="main" className="relative">
             {children}
           </main>

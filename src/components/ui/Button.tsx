@@ -99,6 +99,12 @@ export function Button(props: ButtonProps) {
         >
           {inner}
         </a>
+      ) : props.href.startsWith("#") ? (
+        // Same-page anchor: a plain <a> so the delegated smooth-scroll handler
+        // owns it, rather than the router treating it as a navigation.
+        <a {...(rest as ComponentProps<"a">)} href={props.href} className={classes}>
+          {inner}
+        </a>
       ) : (
         <Link
           {...(rest as Omit<ComponentProps<"a">, "href">)}

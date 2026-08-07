@@ -1,6 +1,7 @@
 "use client";
 
 import Lenis from "lenis";
+import { usePathname } from "next/navigation";
 import {
   createContext,
   useCallback,
@@ -42,6 +43,7 @@ const NAV_OFFSET = -88;
  */
 export function SmoothScroll({ children }: { children: ReactNode }) {
   const lenisRef = useRef<Lenis | null>(null);
+  const pathname = usePathname();
 
   useEffect(() => {
     // Reduced-motion visitors keep native scrolling; `scrollTo` below already
@@ -138,6 +140,15 @@ export function SmoothScroll({ children }: { children: ReactNode }) {
     const timer = window.setTimeout(() => scrollTo(id), 350);
     return () => window.clearTimeout(timer);
   }, [scrollTo]);
+
+  // Land at the top of every new route. Lenis caches its own scroll position,
+  // so Next's restoration alone leaves it out of sync with the page.
+  useEffect(() => {
+    if (window.location.hash) return;
+    const lenis = lenisRef.current;
+    if (lenis) lenis.scrollTo(0, { immediate: true });
+    else window.scrollTo(0, 0);
+  }, [pathname]);
 
   const value = useMemo(() => ({ scrollTo, setLocked }), [scrollTo, setLocked]);
 
