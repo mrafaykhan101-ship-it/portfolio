@@ -21,11 +21,10 @@ export const site = {
   /** Digits only — used for `tel:` and WhatsApp links. */
   phoneHref: "+923343416430",
   /**
-   * TODO: set this to your real Vercel URL after the first deploy.
-   * It drives the canonical tag, Open Graph tags, sitemap.xml and robots.txt,
-   * so link previews and Google will point at the wrong place until it's real.
+   * Live deployment. Drives the canonical tag, Open Graph tags, sitemap.xml
+   * and robots.txt — update this if the domain ever changes.
    */
-  url: "https://rafaykhan.vercel.app",
+  url: "https://portfolio-ten-dun-18.vercel.app",
   github: "https://github.com/mrafaykhan101-ship-it",
   // Share-tracking query params stripped — this is the canonical profile URL.
   linkedin: "https://www.linkedin.com/in/muhammad-rafay-khan-27b298421",
