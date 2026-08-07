@@ -10,22 +10,22 @@ LinkedIn's character limits.
 Pick one. This is the single highest-impact field — it appears in every
 search result, comment and connection request.
 
-**Option A — recommended (specific + clearly open to work):**
+**Option A — recommended (credential + proof + availability):**
 
 ```
-Financial Technology student @ MAJU | Python & Machine Learning for finance | Built a stock-prediction model with a 2.03 backtested Sharpe | Seeking Summer 2026 internship
+Financial Technology student @ MAJU | Google-Certified Data Analyst | Python & Machine Learning for finance — built a stock-prediction model with a 2.03 backtested Sharpe | Seeking Summer 2026 internship
 ```
 
 **Option B — broader, insurtech-leaning:**
 
 ```
-BS Financial Technology @ MAJU | Python · scikit-learn · SQL · SPSS | Interested in insurtech, claims analytics & data-driven finance | Open to internships
+BS Financial Technology @ MAJU | Google Data Analytics Professional Certificate | Python · scikit-learn · SQL · SPSS | Interested in insurtech, claims analytics & data-driven finance | Open to internships
 ```
 
 **Option C — short and confident:**
 
 ```
-Financial Technology student who codes. Python, ML and financial modelling. Seeking a FinTech internship for Summer 2026.
+Google-Certified Data Analyst and Financial Technology student. Python, ML and financial modelling. Seeking a FinTech internship for Summer 2026.
 ```
 
 ---
@@ -37,7 +37,7 @@ The first ~2 lines show before "…see more", so the hook is front-loaded.
 ```
 I can read a balance sheet and write the code that interrogates a thousand of them.
 
-I'm a Financial Technology undergraduate at Mohammad Ali Jinnah University in Karachi, five semesters in. My degree sits deliberately between two worlds — accounting, markets and Shariah-compliant finance on one side; Python, machine learning and databases on the other.
+I'm a Financial Technology undergraduate at Mohammad Ali Jinnah University in Karachi and a Google-certified Data Analyst. My degree sits deliberately between two worlds — accounting, markets and Shariah-compliant finance on one side; Python, machine learning and databases on the other.
 
 That combination is the whole point. Some of what I've built:
 
@@ -53,6 +53,7 @@ I'm most drawn to where these skills collide: insurtech and claims analytics, di
 
 I'm currently looking for an internship or entry-level role where I can put this to work on real problems — and learn from people who have already shipped them.
 
+Certified: Google Data Analytics Professional Certificate (+ Advanced Data Analytics Capstone)
 Tools: Python (pandas, scikit-learn, seaborn, matplotlib), SQL, SPSS, Excel
 Portfolio: https://portfolio-ten-dun-18.vercel.app
 
@@ -128,6 +129,32 @@ Tools: SQL (T-SQL / SQL Server)
 
 ---
 
+## 4b. Licenses & Certifications
+
+**Add profile section → Recommended → Add licenses & certifications.**
+
+Add the Professional Certificate **first** — it's the umbrella credential and
+the one recruiters filter for. For each: *Issuing organisation* = **Google**,
+tick nothing for expiry (they don't expire), and paste the URL into
+**Credential URL**.
+
+| Name | Credential URL |
+|---|---|
+| Google Data Analytics Professional Certificate | `https://coursera.org/share/7ee0efed5dd8d4a81171016d325d2863` |
+| Google Advanced Data Analytics Capstone | `https://coursera.org/share/63d987ead765fbd94be1457ccf08cec8` |
+| Google Data Analytics Capstone: Complete a Case Study | `https://coursera.org/share/f243dd5a480d80372cf58f5fe9617a55` |
+| Analyze Data to Answer Questions | `https://coursera.org/share/2ded61c17f244fdd93de058308711f45` |
+| Process Data from Dirty to Clean | `https://coursera.org/share/14fbeabd220fcc3c99518518af303ad6` |
+| Prepare Data for Exploration | `https://coursera.org/share/d69a8982069636997c8ffb6aef6eb01d` |
+| Ask Questions to Make Data-Driven Decisions | `https://coursera.org/share/7db7d46c52eaec085cc969baa9351acf` |
+| Foundations: Data, Data, Everywhere | `https://coursera.org/share/a95d24ad237831d5eeecf035fc8bf810` |
+
+> **Shortcut:** Coursera can push these to LinkedIn for you. Open the
+> certificate on Coursera and use **Add to LinkedIn profile** — it fills in
+> the name, issuer and credential URL automatically.
+
+---
+
 ## 5. Skills to add
 
 Add these, then reorder so the top three are **Python**, **Machine
@@ -177,9 +204,9 @@ rather than the post body — LinkedIn suppresses reach on posts with outbound
 links.
 
 ```
-I built my portfolio from scratch.
+I built my portfolio from scratch — and finished the Google Data Analytics Professional Certificate along the way.
 
-Not a template — a Next.js site with real animation work, an accessibility pass, and a perfect-score production build. It documents what I've actually shipped as a Financial Technology student at MAJU:
+Not a template: a Next.js site with real animation work, an accessibility pass and a clean production build. It documents what I've actually shipped as a Financial Technology student at MAJU:
 
 → A Random Forest model predicting next-day MCB Bank stock returns — 89 engineered features, 56.6% walk-forward accuracy, 2.03 backtested Sharpe
 → A PKR 1 billion Diminishing Musharakah financing structure, benchmarked against conventional financing
