@@ -43,6 +43,15 @@
   --color-mint-400: #4ade9b;
   --color-mint-500: #1fc286;
 
+  /* Chart marks. These two hues pass all six palette checks against the dark
+     chart surface (#0b0d15): lightness band, chroma floor, CVD separation
+     (ΔE 16.8 deutan) and normal-vision separation (ΔE 23.0). Do not swap them
+     for the lighter iris-400/aqua-400 UI tints — those fail the band and sit
+     ΔE 11.6 apart, which is below the readability floor. */
+  --color-chart-1: #6e56f8;
+  --color-chart-2: #0ea5c4;
+  --color-chart-track: #232840;
+
   --radius-4xl: 1.75rem;
   --radius-5xl: 2.25rem;
 

@@ -89,30 +89,26 @@ export const about = {
   eyebrow: "About",
   heading: "Finance is becoming software. I'm learning to write it.",
   paragraphs: [
-    "I'm Muhammad Rafay Khan, a Financial Technology undergraduate at Mohammad Ali Jinnah University in Karachi, five semesters into a degree that sits deliberately between two worlds — accounting, markets and Shariah-compliant finance on one side; Python, machine learning and databases on the other.",
-    "That combination is the whole point. I've engineered 89 features to predict PSX stock returns, modelled a PKR 1 billion Diminishing Musharakah financing structure, run regression studies in SPSS, and designed a 22-table relational database from scratch. I can read a balance sheet and I can write the code that interrogates a thousand of them.",
-    "I'm most drawn to the places those skills collide: insurtech and claims analytics, digital banking, and data-driven financial decision-making. Right now I'm looking for an internship or entry-level role where I can put that to work on real problems — and learn from people who have already shipped them.",
+    "I can read a balance sheet and write the code that interrogates a thousand of them.",
+    "I'm a Financial Technology undergraduate at Mohammad Ali Jinnah University in Karachi, five semesters into a degree that sits between two worlds — accounting, markets and Shariah-compliant finance on one side; Python, machine learning and databases on the other.",
+    "I'm most drawn to where those collide: insurtech and claims analytics, digital banking, and data-driven financial decision-making.",
   ],
   highlights: [
     {
-      title: "Machine learning on real data",
-      body: "Random Forests, regression and KNN in Python — feature engineering, walk-forward validation and SHAP-based interpretation, not just fitting a model and hoping.",
+      title: "Machine learning",
+      body: "Random Forests, regression and KNN — with walk-forward validation and SHAP, not just fitting a model and hoping.",
     },
     {
-      title: "Google-certified analyst",
-      body: "Completed the Google Data Analytics Professional Certificate, plus the Advanced Data Analytics capstone — the full pipeline from dirty data to a defensible answer.",
+      title: "Google-certified",
+      body: "Data Analytics Professional Certificate, plus the Advanced Data Analytics capstone.",
     },
     {
       title: "Financial fluency",
-      body: "Financial and cost accounting, market structure and Islamic finance structuring — the vocabulary to work alongside finance teams rather than translate for them.",
+      body: "Cost accounting, market structure and Islamic finance structuring.",
     },
     {
       title: "Statistical rigour",
-      body: "Survey design, reliability testing and regression analysis in SPSS and Python — comfortable interrogating data until it answers the actual question.",
-    },
-    {
-      title: "Systems thinking",
-      body: "Relational database design in SQL Server and version control with Git — a habit of turning analysis into something reproducible and structured.",
+      body: "Survey design, reliability testing and regression in SPSS and Python.",
     },
   ],
 } as const;
@@ -301,12 +297,26 @@ export const skillMarquee = skillGroups.flatMap((g) =>
  */
 export type ProjectStatus = "live" | "completed" | "building";
 
+export type ProjectDetail = {
+  /** One line answering "what question was this trying to settle?" */
+  context: string;
+  /** Ordered method steps. */
+  approach: string[];
+  /** Headline figures. Only numbers that were actually measured. */
+  results: { value: string; label: string; note?: string }[];
+  /** Techniques and tests used. */
+  methods: string[];
+  /** Honest note on limits — the thing an interviewer will probe. */
+  caveat?: string;
+};
+
 export type Project = {
   slug: string;
   title: string;
   category: string;
   blurb: string;
   description: string;
+  detail?: ProjectDetail;
   tech: string[];
   /** Standout result, surfaced as a chip on the card. */
   metric?: { value: string; label: string };
@@ -340,6 +350,32 @@ export const projects: Project[] = [
     blurb: "A Random Forest model forecasting next-day PSX stock returns.",
     description:
       "Built and iteratively refined a Random Forest predicting next-day MCB Bank returns, engineering 89 features across price momentum, technical indicators, macroeconomic variables and sector data. Validated with walk-forward testing and SHAP, permutation and MDI feature-importance methods.",
+    detail: {
+      context:
+        "Can classic technical and macroeconomic signals predict the direction of a Pakistani bank stock the next day — and does any edge survive honest testing?",
+      approach: [
+        "Engineered 89 features across price momentum, technical indicators, macroeconomic variables and sector data",
+        "Trained a Random Forest classifier on next-day directional returns",
+        "Validated with walk-forward (out-of-sample) testing rather than a single split",
+        "Cross-checked feature importance three ways — SHAP, permutation and MDI",
+      ],
+      results: [
+        { value: "56.6%", label: "Directional accuracy", note: "Walk-forward, out-of-sample" },
+        { value: "2.03", label: "Sharpe ratio", note: "Backtested" },
+        { value: "13/15", label: "Quarters above baseline" },
+        { value: "89", label: "Engineered features" },
+      ],
+      methods: [
+        "Random Forest",
+        "Walk-forward validation",
+        "Time-series cross-validation",
+        "SHAP",
+        "Permutation importance",
+        "MDI",
+      ],
+      caveat:
+        "56.6% is a modest edge over a 50% coin flip, and backtested returns are not live returns — transaction costs, slippage and regime change all erode it. The point of the project was to test the signal honestly, not to claim a trading strategy.",
+    },
     tech: ["Python", "scikit-learn", "Time-series CV", "SHAP"],
     metric: { value: "2.03", label: "Backtested Sharpe · 56.6% accuracy" },
     github: null,
@@ -355,6 +391,28 @@ export const projects: Project[] = [
     blurb: "A PKR 1 billion Shariah-compliant property financing structure.",
     description:
       "Modelled a Shariah-compliant commercial property financing structure for a PSX-listed company — a full 7-year rental-sharing and equity buyback schedule — with a 6-category risk assessment and Shariah-compliant mitigations, benchmarked against conventional loan financing.",
+    detail: {
+      context:
+        "How do you finance a PKR 1 billion commercial property without interest — and does the Shariah-compliant structure actually stand up against a conventional loan?",
+      approach: [
+        "Modelled a Diminishing Musharakah: bank and client co-own the asset, client buys out the bank's share over time",
+        "Built the full 7-year rental-sharing and equity buyback schedule",
+        "Ran a six-category risk assessment with Shariah-compliant mitigations",
+        "Benchmarked the total cost and risk profile against conventional loan financing",
+      ],
+      results: [
+        { value: "PKR 1B", label: "Financing modelled" },
+        { value: "7 yrs", label: "Buyback schedule" },
+        { value: "6", label: "Risk categories assessed" },
+      ],
+      methods: [
+        "Diminishing Musharakah",
+        "Rental-sharing schedule",
+        "Equity buyback modelling",
+        "Risk assessment",
+        "Comparative analysis",
+      ],
+    },
     tech: ["Financial Modelling", "Excel", "Islamic Finance"],
     metric: { value: "PKR 1B", label: "Financing structure modelled" },
     github: null,
@@ -370,6 +428,29 @@ export const projects: Project[] = [
     blurb: "Regression and KNN on policyholder and customer datasets.",
     description:
       "Built a linear regression model predicting insurance charges from policyholder data, supported by exploratory analysis of distribution, outliers and correlation. Applied K-Nearest Neighbors with feature scaling to a customer dataset for similarity and pattern analysis.",
+    detail: {
+      context:
+        "What actually drives an insurance premium — and can policyholder attributes predict the charge before a quote is issued?",
+      approach: [
+        "Explored the data first: distributions, outliers and correlation structure",
+        "Fitted a linear regression predicting insurance charges from policyholder attributes",
+        "Applied K-Nearest Neighbors to a customer dataset for similarity and pattern analysis",
+        "Scaled features before KNN, since distance-based methods are sensitive to units",
+      ],
+      results: [
+        { value: "2", label: "Models compared", note: "Linear regression and KNN" },
+        { value: "Full EDA", label: "Distribution, outlier and correlation analysis" },
+      ],
+      methods: [
+        "Linear regression",
+        "K-Nearest Neighbors",
+        "Feature scaling",
+        "Exploratory data analysis",
+        "Correlation analysis",
+      ],
+      caveat:
+        "This was a course project on a teaching dataset, so the value is in the method — EDA before modelling, and scaling before a distance-based model — rather than in a production-grade result.",
+    },
     tech: ["Python", "pandas", "scikit-learn", "seaborn"],
     metric: { value: "EDA + KNN", label: "Insurtech-focused study" },
     github: null,
@@ -385,6 +466,31 @@ export const projects: Project[] = [
     blurb: "A statistical research study on university students' habits.",
     description:
       "Co-designed and fielded a 15-item survey (n = 86) measuring financial literacy and saving behavior. Ran reliability (Cronbach's α), normality, correlation and regression tests in SPSS — finding that financial literacy explains 46% of the variance in saving behavior.",
+    detail: {
+      context:
+        "Do university students who understand money actually save more of it — and how much of saving behaviour can financial literacy alone explain?",
+      approach: [
+        "Co-designed a 15-item instrument measuring financial literacy and saving behaviour",
+        "Fielded the survey to 86 university students",
+        "Tested the instrument's reliability with Cronbach's α before trusting the data",
+        "Ran normality, correlation and regression tests in SPSS",
+      ],
+      results: [
+        { value: "0.462", label: "R² — variance explained", note: "p < 0.001" },
+        { value: "86", label: "Respondents" },
+        { value: "15", label: "Survey items" },
+      ],
+      methods: [
+        "Survey design",
+        "Cronbach's α",
+        "Normality testing",
+        "Correlation analysis",
+        "Linear regression",
+        "Hypothesis testing",
+      ],
+      caveat:
+        "n = 86 from a single university is a convenience sample, so the result describes this population rather than students generally. Regression shows association, not causation.",
+    },
     tech: ["SPSS", "Survey Design", "Hypothesis Testing"],
     metric: { value: "R² = 0.462", label: "p < 0.001 · n = 86" },
     github: null,
@@ -399,6 +505,27 @@ export const projects: Project[] = [
     blurb: "A 22-table relational schema across six operational modules.",
     description:
       "Designed a 22-table relational database covering attendance, library, fee, examination, transportation and hostel-management modules. Implemented primary-key-based table structures and populated the schema with sample records for query testing.",
+    detail: {
+      context:
+        "A school runs six operational systems that all reference the same students. How do you model that once, without duplicating a student record six times?",
+      approach: [
+        "Mapped six operational modules: attendance, library, fees, examinations, transport and hostel",
+        "Designed a 22-table relational schema with primary-key-based structures",
+        "Populated the schema with sample records",
+        "Wrote and tested queries across module boundaries",
+      ],
+      results: [
+        { value: "22", label: "Tables designed" },
+        { value: "6", label: "Operational modules" },
+      ],
+      methods: [
+        "Relational schema design",
+        "Primary/foreign keys",
+        "Normalisation",
+        "T-SQL",
+        "Query testing",
+      ],
+    },
     tech: ["SQL", "T-SQL", "SQL Server", "Schema Design"],
     metric: { value: "22 tables", label: "6 operational modules" },
     github: null,
@@ -424,23 +551,23 @@ export const experience: ExperienceEntry[] = [];
 
 export const experienceSeeking = {
   heading: "No professional experience yet — and I'd like that to change.",
-  body: "I'm actively looking for my first internship. Below is what I'm ready to contribute from day one, backed by real project work, and the kind of team I'd learn the most from.",
+  body: "I'm looking for my first internship. Here's what I can contribute from day one.",
   offering: [
     {
-      title: "Python, ML & data support",
-      body: "Feature engineering, model building, data cleaning and analysis — I've shipped Random Forest, regression and KNN models on real datasets.",
+      title: "Python, ML & data",
+      body: "Feature engineering, model building and data cleaning — shipped on real datasets.",
     },
     {
-      title: "Financial analysis assistance",
-      body: "Statement analysis, cost calculations, Islamic finance structuring and Excel modelling with an eye for what the numbers imply.",
+      title: "Financial analysis",
+      body: "Statement analysis, cost calculations and Excel modelling.",
     },
     {
       title: "Research & documentation",
-      body: "Survey design, statistical testing and clearly written analysis — the kind of research that can actually feed a decision.",
+      body: "Survey design, statistical testing and analysis written up clearly.",
     },
     {
       title: "A fast learning curve",
-      body: "I ask precise questions, take feedback literally, and I'd rather understand the system than patch around it.",
+      body: "Precise questions, feedback taken literally, systems understood rather than patched.",
     },
   ],
   targets: [

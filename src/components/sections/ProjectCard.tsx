@@ -1,8 +1,9 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import {
-  ArrowUpRight,
+  ArrowRight,
   BarChart3,
   BrainCircuit,
   Check,
@@ -90,7 +91,6 @@ function CoverArt({ project }: { project: Project }) {
 export function ProjectCard({ project }: { project: Project }) {
   const accent = accentStyles[project.accent];
   const hasGithub = Boolean(project.github);
-  const hasDemo = Boolean(project.demo);
 
   return (
     <GlassCard as="article" className="flex h-full flex-col" spotlight>
@@ -140,14 +140,15 @@ export function ProjectCard({ project }: { project: Project }) {
       {/* Body */}
       <div className="flex flex-1 flex-col p-5">
         <h3 className="text-lg font-semibold text-mist-50">{project.title}</h3>
-        <p className="mt-1.5 text-sm font-medium text-mist-300">{project.blurb}</p>
-        <p className="mt-3 text-[0.8125rem] leading-relaxed text-mist-400">
-          {project.description}
+        {/* Card carries the one-line pitch only; the full write-up lives on the
+            case-study page, so the grid stays scannable. */}
+        <p className="mt-2 text-[0.8125rem] leading-relaxed text-mist-400">
+          {project.blurb}
         </p>
 
         {/* Tech */}
         <ul className="mt-4 flex flex-wrap gap-1.5">
-          {project.tech.map((tech) => (
+          {project.tech.slice(0, 4).map((tech) => (
             <li
               key={tech}
               className="rounded-md border border-mist-50/8 bg-mist-50/4 px-2 py-1 font-mono text-[0.6875rem] text-mist-300"
@@ -159,22 +160,28 @@ export function ProjectCard({ project }: { project: Project }) {
 
         {/* Actions — pinned to the bottom so cards align */}
         <div className="mt-6 flex items-center gap-2.5 border-t border-mist-50/6 pt-4">
+          <Link
+            href={`/projects/${project.slug}`}
+            className={cn(
+              "group/action inline-flex flex-1 items-center justify-center gap-2 rounded-lg border px-3 py-2 text-[0.8125rem] font-medium transition-all duration-300 hover:brightness-125",
+              accent.softBg,
+              accent.text,
+              accent.border,
+            )}
+          >
+            Case study
+            <ArrowRight
+              className="size-4 transition-transform duration-300 group-hover/action:translate-x-0.5"
+              aria-hidden
+            />
+          </Link>
           <ActionButton
             href={project.github}
             enabled={hasGithub}
             label="Code"
-            disabledLabel="Publishing soon"
+            disabledLabel="Code soon"
             icon={<GithubIcon className="size-4" />}
             variant="ghost"
-          />
-          <ActionButton
-            href={project.demo}
-            enabled={hasDemo}
-            label="Live demo"
-            disabledLabel="No demo"
-            icon={<ArrowUpRight className="size-4" />}
-            variant="accent"
-            accentClass={cn(accent.softBg, accent.text, accent.border)}
           />
         </div>
       </div>
