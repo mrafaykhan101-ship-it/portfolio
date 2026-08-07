@@ -36,10 +36,10 @@ export function Projects() {
         eyebrow="Projects"
         title={
           <>
-            Things I&apos;m <span className="text-gradient">building</span>
+            Work that has <span className="text-gradient">real results</span>
           </>
         }
-        lede="A working portfolio in progress. These are the projects I'm shipping as I go — placeholders today, live repositories soon. The grid is built to grow."
+        lede="Five completed academic projects spanning machine learning, Islamic finance, statistical research and database design — each with the numbers it actually produced. Code is being cleaned up and published to GitHub."
       />
 
       {/* Filter bar */}
@@ -112,7 +112,14 @@ export function Projects() {
       {/* Add-more hint */}
       <Reveal delay={0.1} className="mt-8">
         <p className="text-center text-sm text-mist-500">
-          More projects are on the way as I complete them.
+          Happy to walk through the methodology or share code for any of these —{" "}
+          <a
+            href="#contact"
+            className="font-medium text-mist-300 underline decoration-mist-50/20 underline-offset-4 transition-colors hover:text-mist-50 hover:decoration-iris-400"
+          >
+            just ask
+          </a>
+          .
         </p>
       </Reveal>
     </Section>

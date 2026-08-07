@@ -164,12 +164,20 @@ export const education: EducationEntry[] = [
 
 /* ---------------------------------------------------------------- skills */
 
+/**
+ * Proficiency is expressed as an evidence-backed tier, not a percentage.
+ * Invented precision ("82/100") is unverifiable and is the hallmark of
+ * template portfolios; a tier plus the work that justifies it is honest and
+ * survives being questioned in an interview.
+ */
+export type SkillTier = "Core" | "Strong" | "Working";
+
 export type SkillGroup = {
   id: string;
   label: string;
   blurb: string;
   accent: "iris" | "aqua" | "mint";
-  skills: { name: string; level: number; note: string }[];
+  skills: { name: string; tier: SkillTier; note: string }[];
 };
 
 export const skillGroups: SkillGroup[] = [
@@ -181,27 +189,27 @@ export const skillGroups: SkillGroup[] = [
     skills: [
       {
         name: "Python",
-        level: 82,
-        note: "pandas, NumPy — my primary language for data and modelling.",
+        tier: "Core",
+        note: "pandas, NumPy — my primary language across every data project here.",
       },
       {
         name: "scikit-learn",
-        level: 76,
-        note: "Random Forests, regression, KNN, cross-validation and SHAP.",
-      },
-      {
-        name: "SQL (T-SQL)",
-        level: 74,
-        note: "Relational schema design and queries in SQL Server.",
+        tier: "Strong",
+        note: "Random Forests, regression and KNN, with walk-forward validation and SHAP.",
       },
       {
         name: "SPSS",
-        level: 78,
-        note: "Reliability, correlation and regression testing for research.",
+        tier: "Strong",
+        note: "Reliability, normality, correlation and regression testing for research.",
+      },
+      {
+        name: "SQL (T-SQL)",
+        tier: "Strong",
+        note: "Designed and populated a 22-table relational schema in SQL Server.",
       },
       {
         name: "Git & GitHub",
-        level: 70,
+        tier: "Working",
         note: "Branching, commits and collaborative version control.",
       },
     ],
@@ -213,29 +221,29 @@ export const skillGroups: SkillGroup[] = [
     accent: "mint",
     skills: [
       {
-        name: "Financial Technology",
-        level: 80,
-        note: "Payments, digital banking and the systems moving money.",
-      },
-      {
         name: "Financial & Cost Accounting",
-        level: 82,
+        tier: "Core",
         note: "Statements, costing methods and financial reporting.",
       },
       {
-        name: "Islamic Finance Structuring",
-        level: 77,
-        note: "Shariah-compliant financing models and risk assessment.",
+        name: "Microsoft Excel",
+        tier: "Core",
+        note: "Financial modelling — including a 7-year PKR 1B financing schedule.",
       },
       {
         name: "Statistical & Regression Analysis",
-        level: 81,
+        tier: "Strong",
         note: "Hypothesis testing, EDA and modelling relationships in data.",
       },
       {
-        name: "Microsoft Excel",
-        level: 85,
-        note: "Financial modelling, lookups, pivots and analysis at speed.",
+        name: "Islamic Finance Structuring",
+        tier: "Strong",
+        note: "Diminishing Musharakah modelling with six-category risk assessment.",
+      },
+      {
+        name: "Financial Technology",
+        tier: "Working",
+        note: "Payments, digital banking and the systems moving money.",
       },
     ],
   },
@@ -247,28 +255,28 @@ export const skillGroups: SkillGroup[] = [
     skills: [
       {
         name: "Analytical Thinking",
-        level: 88,
+        tier: "Core",
         note: "Breaking messy problems into things that can be measured.",
       },
       {
+        name: "Teamwork",
+        tier: "Core",
+        note: "Four of five projects here were delivered as a group.",
+      },
+      {
         name: "Research Design",
-        level: 80,
-        note: "Framing questions, designing surveys and testing them honestly.",
+        tier: "Strong",
+        note: "Designed and fielded a 15-item survey, then tested it honestly.",
       },
       {
         name: "Problem Solving",
-        level: 86,
+        tier: "Strong",
         note: "Structured, patient and comfortable with the unfamiliar.",
       },
       {
         name: "Communication & Presentation",
-        level: 84,
+        tier: "Strong",
         note: "Turning technical analysis into a case people can act on.",
-      },
-      {
-        name: "Teamwork",
-        level: 87,
-        note: "Group projects, shared repositories and honest feedback.",
       },
     ],
   },
@@ -281,7 +289,11 @@ export const skillMarquee = skillGroups.flatMap((g) =>
 
 /* -------------------------------------------------------------- projects */
 
-export type ProjectStatus = "live" | "building" | "planned";
+/**
+ * `completed` — the work is done and the results are real; the code just
+ * isn't published yet. `live` — a public repo or demo exists.
+ */
+export type ProjectStatus = "live" | "completed" | "building";
 
 export type Project = {
   slug: string;
@@ -326,7 +338,7 @@ export const projects: Project[] = [
     metric: { value: "2.03", label: "Backtested Sharpe · 56.6% accuracy" },
     github: null,
     demo: null,
-    status: "planned",
+    status: "completed",
     accent: "iris",
     featured: true,
   },
@@ -341,7 +353,7 @@ export const projects: Project[] = [
     metric: { value: "PKR 1B", label: "Financing structure modelled" },
     github: null,
     demo: null,
-    status: "planned",
+    status: "completed",
     accent: "mint",
     featured: true,
   },
@@ -356,7 +368,7 @@ export const projects: Project[] = [
     metric: { value: "EDA + KNN", label: "Insurtech-focused study" },
     github: null,
     demo: null,
-    status: "planned",
+    status: "completed",
     accent: "aqua",
     featured: true,
   },
@@ -371,7 +383,7 @@ export const projects: Project[] = [
     metric: { value: "R² = 0.462", label: "p < 0.001 · n = 86" },
     github: null,
     demo: null,
-    status: "planned",
+    status: "completed",
     accent: "aqua",
   },
   {
@@ -385,7 +397,7 @@ export const projects: Project[] = [
     metric: { value: "22 tables", label: "6 operational modules" },
     github: null,
     demo: null,
-    status: "planned",
+    status: "completed",
     accent: "iris",
   },
 ];
@@ -580,3 +592,4 @@ export const contactChannels = [
     hint: "Open to remote and hybrid",
   },
 ] as const;
+

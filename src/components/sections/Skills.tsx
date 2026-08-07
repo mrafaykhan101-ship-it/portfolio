@@ -1,39 +1,27 @@
 "use client";
 
 import { motion, useReducedMotion } from "motion/react";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { Section, SectionHeading } from "@/components/ui/Section";
 import { Reveal } from "@/components/ui/Reveal";
 import { GlassCard } from "@/components/ui/GlassCard";
-import { skillGroups } from "@/lib/content";
-import { accentStyles, type Accent } from "@/lib/accents";
+import { skillGroups, type SkillTier } from "@/lib/content";
+import { accentStyles } from "@/lib/accents";
 import { EASE_EXPO } from "@/lib/motion";
-import { useInViewport } from "@/hooks/useInViewport";
 import { cn } from "@/lib/utils";
 
-/** Animated proficiency meter. Fills once when scrolled into view. */
-function Meter({ level, accent }: { level: number; accent: Accent }) {
-  const reduce = useReducedMotion();
-  const ref = useRef<HTMLDivElement>(null);
-  const inView = useInViewport(ref, { margin: 40 });
-  return (
-    <div
-      ref={ref}
-      className="mt-3 h-1.5 overflow-hidden rounded-full bg-mist-50/8"
-      role="meter"
-      aria-valuenow={level}
-      aria-valuemin={0}
-      aria-valuemax={100}
-    >
-      <motion.div
-        className={cn("h-full rounded-full bg-linear-to-r", accentStyles[accent].gradient)}
-        initial={reduce ? false : { width: 0 }}
-        animate={{ width: reduce || inView ? `${level}%` : 0 }}
-        transition={{ duration: 1.1, ease: EASE_EXPO, delay: 0.1 }}
-      />
-    </div>
-  );
-}
+/**
+ * Tier badge.
+ *
+ * Three honest levels instead of a percentage bar: the numbers on a typical
+ * "skills" bar are unverifiable, and the bars themselves are the clearest
+ * tell of a template portfolio.
+ */
+const tierStyles: Record<SkillTier, string> = {
+  Core: "bg-mint-500/12 text-mint-300 ring-mint-500/25",
+  Strong: "bg-iris-500/12 text-iris-300 ring-iris-500/25",
+  Working: "bg-mist-50/6 text-mist-300 ring-mist-50/12",
+};
 
 export function Skills() {
   const [activeId, setActiveId] = useState<string>(skillGroups[0].id);
@@ -49,7 +37,7 @@ export function Skills() {
             A toolkit split across <span className="text-gradient">three fronts</span>
           </>
         }
-        lede="Not a wall of logos. These are the technical, financial and human skills I actually reach for — grouped by how I use them, with an honest read on where each one stands."
+        lede="Not a wall of logos. These are the technical, financial and human skills I actually reach for — each one tied to the work that backs it up."
       />
 
       {/* Category selector */}
@@ -71,7 +59,7 @@ export function Skills() {
                 id={`skills-tab-${group.id}`}
                 onClick={() => setActiveId(group.id)}
                 className={cn(
-                  "relative rounded-full px-4 py-2.5 text-sm font-medium transition-colors duration-300",
+                  "relative min-h-10 rounded-full px-4 py-2.5 text-sm font-medium transition-colors duration-300",
                   isActive ? "text-mist-50" : "text-mist-300 hover:text-mist-100",
                 )}
               >
@@ -123,21 +111,19 @@ export function Skills() {
                 }}
               >
                 <GlassCard className="h-full p-5" glow={false} spotlight={false}>
-                  <div className="flex items-baseline justify-between gap-2">
+                  <div className="flex items-start justify-between gap-3">
                     <h3 className="text-[0.9375rem] font-semibold text-mist-50">
                       {skill.name}
                     </h3>
                     <span
                       className={cn(
-                        "font-mono text-xs tabular-nums",
-                        accentStyles[active.accent].text,
+                        "shrink-0 rounded-full px-2.5 py-1 text-[0.625rem] font-semibold tracking-wide uppercase ring-1 ring-inset",
+                        tierStyles[skill.tier],
                       )}
                     >
-                      {skill.level}
-                      <span className="text-mist-500">/100</span>
+                      {skill.tier}
                     </span>
                   </div>
-                  <Meter level={skill.level} accent={active.accent} />
                   <p className="mt-3 text-[0.8125rem] leading-relaxed text-mist-400">
                     {skill.note}
                   </p>
@@ -145,6 +131,15 @@ export function Skills() {
               </motion.div>
             ))}
           </div>
+
+          {/* Legend — makes the tiers mean something concrete */}
+          <p className="mt-6 text-xs leading-relaxed text-mist-500">
+            <span className="font-semibold text-mist-400">Core</span> — used daily
+            across multiple projects. <span className="font-semibold text-mist-400">Strong</span>{" "}
+            — applied end-to-end in real project work.{" "}
+            <span className="font-semibold text-mist-400">Working</span> — comfortable,
+            and actively deepening.
+          </p>
         </motion.div>
       </div>
     </Section>

@@ -16,7 +16,7 @@ export function Achievements() {
             The work, <span className="text-gradient">by the numbers</span>
           </>
         }
-        lede="No trophies yet — but real, measured results. These are the numbers I'm proudest of from my project work, and the credentials I'm chasing next."
+        lede="Measured outcomes rather than certificates. These are the results I'm proudest of from my project work so far — and the credentials I'm chasing next."
       />
 
       {/* Metric grid */}

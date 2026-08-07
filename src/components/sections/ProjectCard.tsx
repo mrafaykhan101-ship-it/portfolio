@@ -5,9 +5,10 @@ import {
   ArrowUpRight,
   BarChart3,
   BrainCircuit,
+  Check,
+  Clock,
   Database,
   Landmark,
-  Lock,
   Sparkles,
 } from "lucide-react";
 import { GlassCard } from "@/components/ui/GlassCard";
@@ -26,8 +27,8 @@ const categoryIcon: Record<string, typeof BarChart3> = {
 
 const statusLabel: Record<Project["status"], string> = {
   live: "Live",
+  completed: "Completed",
   building: "In progress",
-  planned: "Planned",
 };
 
 /**
@@ -101,15 +102,15 @@ export function ProjectCard({ project }: { project: Project }) {
         <span
           className={cn(
             "absolute top-3 left-3 inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-[0.6875rem] font-medium backdrop-blur-md",
-            project.status === "live"
-              ? "border-mint-500/30 bg-mint-500/12 text-mint-300"
-              : "border-mist-50/12 bg-ink-950/50 text-mist-300",
+            project.status === "building"
+              ? "border-mist-50/12 bg-ink-950/50 text-mist-300"
+              : "border-mint-500/30 bg-mint-500/12 text-mint-300",
           )}
         >
-          {project.status === "live" ? (
-            <span className="size-1.5 rounded-full bg-mint-400" />
+          {project.status === "building" ? (
+            <Clock className="size-3" aria-hidden />
           ) : (
-            <Lock className="size-3" aria-hidden />
+            <Check className="size-3" aria-hidden />
           )}
           {statusLabel[project.status]}
         </span>
@@ -162,7 +163,7 @@ export function ProjectCard({ project }: { project: Project }) {
             href={project.github}
             enabled={hasGithub}
             label="Code"
-            disabledLabel="Code soon"
+            disabledLabel="Publishing soon"
             icon={<GithubIcon className="size-4" />}
             variant="ghost"
           />
@@ -170,7 +171,7 @@ export function ProjectCard({ project }: { project: Project }) {
             href={project.demo}
             enabled={hasDemo}
             label="Live demo"
-            disabledLabel="Demo soon"
+            disabledLabel="No demo"
             icon={<ArrowUpRight className="size-4" />}
             variant="accent"
             accentClass={cn(accent.softBg, accent.text, accent.border)}
@@ -212,7 +213,7 @@ function ActionButton({
     return (
       <span
         aria-disabled="true"
-        title="Coming soon"
+        title="Not publicly available yet"
         className={cn(
           base,
           "cursor-not-allowed border border-dashed border-mist-50/10 text-mist-500",
