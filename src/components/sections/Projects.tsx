@@ -64,7 +64,7 @@ export function Projects() {
                   aria-selected={isActive}
                   onClick={() => setFilter(category)}
                   className={cn(
-                    "relative rounded-full px-4 py-2 text-sm font-medium transition-colors duration-300",
+                    "relative min-h-10 rounded-full px-4 py-2.5 text-sm font-medium transition-colors duration-300",
                     isActive
                       ? "text-mist-50"
                       : "text-mist-300 hover:text-mist-100",

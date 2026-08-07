@@ -49,7 +49,8 @@ export function Footer() {
                 <li key={link.id}>
                   <a
                     href={`#${link.id}`}
-                    className="text-sm text-mist-300 transition-colors duration-300 hover:text-mist-50"
+                    // py keeps the tap target >=24px tall (WCAG 2.2 AA 2.5.8)
+                    className="inline-block py-1 text-sm text-mist-300 transition-colors duration-300 hover:text-mist-50"
                   >
                     {link.label}
                   </a>
@@ -70,7 +71,7 @@ export function Footer() {
                     href={href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="group inline-flex items-center gap-2.5 text-sm text-mist-300 transition-colors duration-300 hover:text-mist-50"
+                    className="group inline-flex items-center gap-2.5 py-1 text-sm text-mist-300 transition-colors duration-300 hover:text-mist-50"
                   >
                     <Icon className="size-4 text-mist-500 transition-colors group-hover:text-iris-300" aria-hidden />
                     {label}
@@ -82,7 +83,7 @@ export function Footer() {
 
             <a
               href={`mailto:${site.email}`}
-              className="mt-6 inline-block text-sm text-mist-300 underline decoration-mist-50/20 underline-offset-4 transition-colors hover:text-mist-50 hover:decoration-iris-400"
+              className="mt-5 inline-block py-1 text-sm text-mist-300 underline decoration-mist-50/20 underline-offset-4 transition-colors hover:text-mist-50 hover:decoration-iris-400"
             >
               {site.email}
             </a>

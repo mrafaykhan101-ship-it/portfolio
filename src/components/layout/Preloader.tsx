@@ -1,7 +1,7 @@
 "use client";
 
 import gsap from "gsap";
-import { useLayoutEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { site } from "@/lib/content";
 import { useSmoothScroll } from "@/components/providers/SmoothScroll";
 
@@ -19,19 +19,37 @@ const SESSION_KEY = "rk-intro-played";
  * the animation. It also plays once per session and is skipped entirely for
  * reduced-motion visitors.
  */
+/**
+ * `useLayoutEffect` warns when it runs during server rendering, so fall back
+ * to `useEffect` there. On the client this is always the layout variant,
+ * which is what lets the skip path hide the overlay before first paint.
+ */
+const useIsomorphicLayoutEffect =
+  typeof window !== "undefined" ? useLayoutEffect : useEffect;
+
 export function Preloader() {
+  // Starts `false` on both server and client so the hydrated tree matches;
+  // whether the intro actually plays is decided below, before paint.
   const [done, setDone] = useState(false);
   const rootRef = useRef<HTMLDivElement>(null);
   const counterRef = useRef<HTMLSpanElement>(null);
   const { setLocked } = useSmoothScroll();
 
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
+    const root = rootRef.current;
+    if (!root) return;
+
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const seen = sessionStorage.getItem(SESSION_KEY) === "1";
 
     if (reduce || seen) {
-      setDone(true);
-      return;
+      // Hide imperatively rather than via state: this runs before the browser
+      // paints, so there's no flash, and it keeps the render tree stable.
+      root.style.display = "none";
+      // Unmount on the next frame. Scheduling it in a callback (instead of
+      // calling setState in the effect body) avoids a cascading render.
+      const id = requestAnimationFrame(() => setDone(true));
+      return () => cancelAnimationFrame(id);
     }
 
     sessionStorage.setItem(SESSION_KEY, "1");

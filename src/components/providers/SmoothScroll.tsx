@@ -8,7 +8,6 @@ import {
   useEffect,
   useMemo,
   useRef,
-  useState,
   type ReactNode,
 } from "react";
 
@@ -43,13 +42,11 @@ const NAV_OFFSET = -88;
  */
 export function SmoothScroll({ children }: { children: ReactNode }) {
   const lenisRef = useRef<Lenis | null>(null);
-  const [ready, setReady] = useState(false);
 
   useEffect(() => {
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      setReady(true);
-      return;
-    }
+    // Reduced-motion visitors keep native scrolling; `scrollTo` below already
+    // falls back to an instant jump when there's no Lenis instance.
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
     const lenis = new Lenis({
       duration: 1.05,
@@ -69,7 +66,6 @@ export function SmoothScroll({ children }: { children: ReactNode }) {
       frame = requestAnimationFrame(raf);
     };
     frame = requestAnimationFrame(raf);
-    setReady(true);
 
     return () => {
       cancelAnimationFrame(frame);
@@ -112,8 +108,6 @@ export function SmoothScroll({ children }: { children: ReactNode }) {
 
   // Delegated in-page anchor handling.
   useEffect(() => {
-    if (!ready) return;
-
     function onClick(event: MouseEvent) {
       if (event.defaultPrevented || event.button !== 0) return;
       if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
@@ -135,15 +129,15 @@ export function SmoothScroll({ children }: { children: ReactNode }) {
 
     document.addEventListener("click", onClick);
     return () => document.removeEventListener("click", onClick);
-  }, [ready, scrollTo]);
+  }, [scrollTo]);
 
   // Honour a hash present on first load, once layout has settled.
   useEffect(() => {
-    if (!ready || !window.location.hash) return;
+    if (!window.location.hash) return;
     const id = window.location.hash;
     const timer = window.setTimeout(() => scrollTo(id), 350);
     return () => window.clearTimeout(timer);
-  }, [ready, scrollTo]);
+  }, [scrollTo]);
 
   const value = useMemo(() => ({ scrollTo, setLocked }), [scrollTo, setLocked]);
 

@@ -8,7 +8,6 @@ import { Reveal } from "@/components/ui/Reveal";
 import { GlassCard } from "@/components/ui/GlassCard";
 import { GithubIcon, LinkedinIcon } from "@/components/ui/BrandIcons";
 import { contactChannels, site } from "@/lib/content";
-import { EASE_EXPO } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 
 const channelIcon = { email: Mail, phone: Phone, location: MapPin } as const;

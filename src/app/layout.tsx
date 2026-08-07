@@ -55,6 +55,7 @@ export const metadata: Metadata = {
     "portfolio",
   ],
   category: "technology",
+  manifest: "/manifest.webmanifest",
   alternates: { canonical: "/" },
   openGraph: {
     type: "website",

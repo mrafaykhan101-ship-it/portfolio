@@ -29,11 +29,10 @@ export function Navbar() {
 
   useEffect(() => {
     setLocked(open);
-    if (open) {
-      // Give the panel a frame to mount before moving focus into it.
-      const id = requestAnimationFrame(() => closeRef.current?.focus());
-      return () => cancelAnimationFrame(id);
-    }
+    // The panel mounts in the same commit, so the node already exists here.
+    // Focusing directly (rather than deferring a frame) keeps focus management
+    // working even when rAF is throttled — e.g. a backgrounded tab.
+    if (open) closeRef.current?.focus();
   }, [open, setLocked]);
 
   useEffect(() => {
