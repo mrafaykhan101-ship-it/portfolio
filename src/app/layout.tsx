@@ -48,7 +48,7 @@ export const metadata: Metadata = {
     "Karachi",
     "Pakistan",
     "Mohammad Ali Jinnah University",
-    "FinTech internship",
+    "financial machine learning",
     "data analysis",
     "machine learning",
     "digital banking",

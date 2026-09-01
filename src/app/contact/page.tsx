@@ -5,7 +5,7 @@ import { Contact } from "@/components/sections/Contact";
 export const metadata: Metadata = {
   title: "Contact & Résumé",
   description:
-    "Get in touch about internships and entry-level roles in FinTech, insurtech, data and applied AI — or download the résumé.",
+    "Contact details and résumé for Muhammad Rafay Khan — questions about any project's methodology or code are welcome.",
   alternates: { canonical: "/contact" },
 };
 

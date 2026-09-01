@@ -1,212 +1,117 @@
-# Muhammad Rafay Khan — Portfolio
+# Portfolio — Muhammad Rafay Khan
 
-A premium, animated personal portfolio built with Next.js 16, React 19,
-TypeScript and Tailwind CSS v4.
+Source for **[portfolio-ten-dun-18.vercel.app](https://portfolio-ten-dun-18.vercel.app)**.
 
-Dark, glassmorphic and motion-led — designed to read like a product site
-rather than a résumé template.
+A dark, motion-led personal site documenting five completed projects across
+financial machine learning, statistical research, Islamic finance structuring and
+relational data modelling — each with its method, its measured result, and its limits.
 
----
-
-## Running it locally
-
-```bash
-npm install
-```
-
-```bash
-npm run dev
-```
-
-Then open <http://localhost:3000>.
-
-Other scripts:
-
-| Command         | What it does                                  |
-| --------------- | --------------------------------------------- |
-| `npm run dev`   | Dev server with hot reload (Turbopack)        |
-| `npm run build` | Production build                              |
-| `npm run start` | Serve the production build locally            |
-| `npm run lint`  | ESLint                                        |
-| `npx tsc --noEmit` | Type-check without emitting files          |
+Next.js 16 · React 19 · TypeScript · Tailwind CSS v4 · Framer Motion · GSAP · Lenis
 
 ---
 
-## Making it yours
+## Running it
 
-Almost everything you'll want to change lives in **one file**:
-[`src/lib/content.ts`](src/lib/content.ts). No component edits required.
-
-### 1. Fill in the placeholder links
-
-These are the only values that still point at placeholders:
-
-```ts
-// src/lib/content.ts
-github:   "https://github.com/",        // ← your GitHub profile
-linkedin: "https://www.linkedin.com/",  // ← your LinkedIn profile
-url:      "https://rafaykhan.vercel.app", // ← your live URL after deploying
+```bash
+npm install && npm run dev
 ```
 
-`url` matters more than it looks — it drives the canonical tag, the Open
-Graph tags, the sitemap and `robots.txt`. Set it to your real domain once
-you've deployed.
-
-### 2. Add your photo (optional)
-
-The hero currently shows a designed monogram card. To use a real photo, drop
-a square-ish image into `public/` and point to it:
-
-```ts
-portrait: "/portrait.jpg",
-```
-
-It renders through `next/image` automatically — no other change needed.
-
-### 3. Add or edit a project
-
-Append to the `projects` array. To publish code or a demo, set `github` /
-`demo` to real URLs — the buttons switch from a disabled state to real links
-on their own:
-
-```ts
-{
-  slug: "my-project",
-  title: "My Project",
-  category: "Machine Learning", // must exist in projectCategories
-  blurb: "One line that sells it.",
-  description: "Two or three sentences on what you built and how.",
-  tech: ["Python", "pandas"],
-  metric: { value: "94%", label: "Accuracy" }, // optional headline number
-  github: "https://github.com/you/my-project",
-  demo: null,
-  status: "completed", // "live" | "completed" | "building"
-  accent: "iris",      // "iris" | "aqua" | "mint"
-  image: "/my-project.png", // optional; falls back to generated cover art
-}
-```
-
-### 4. Update the résumé
-
-Replace `public/Muhammad-Rafay-Khan-Resume.pdf` with your latest PDF, keeping
-the filename (or update `resumePath` in `content.ts`).
-
-### 5. Add real work experience
-
-`experience` is an empty array, so the Experience section renders an
-intentional "open to work" pitch. Add a single entry and it automatically
-switches to a proper role timeline — no component changes.
+| Command | |
+|---|---|
+| `npm run dev` | Dev server (Turbopack) |
+| `npm run build` | Production build |
+| `npm run start` | Serve the production build |
+| `npm run lint` | ESLint |
+| `npx tsc --noEmit` | Type-check |
 
 ---
 
-## Deploying to Vercel
+## Engineering notes
 
-The project is a standard Next.js app and deploys with zero configuration.
+The parts of this build that involved an actual decision.
 
-### Push to GitHub
+### Scroll reveals don't use IntersectionObserver
 
-```bash
-git remote add origin https://github.com/<your-username>/<your-repo>.git
-```
+The obvious implementation is `IntersectionObserver` with `once: true`. It has a
+failure mode: IO callbacks are tied to the compositor and stop firing whenever the
+page isn't being painted — a background tab, a print context, a non-displayed
+webview. A one-shot reveal that never fires leaves its content stranded at
+`opacity: 0`, permanently.
 
-```bash
-git push -u origin main
-```
+`useInViewport` uses `getBoundingClientRect` on a passive, rAF-throttled scroll
+listener instead. Geometry is available whether or not the page is compositing, so
+content cannot get trapped invisible. It unsubscribes itself once a `once` element
+has been shown.
 
-> If `git push` complains that the branch is called something else, run
-> `git branch -M main` first.
+### Motion state is server-rendered, so there's a no-JS fallback
 
-### Deploy
+Framer Motion emits `style="opacity:0"` during SSR for anything with an entrance
+animation, and the preloader only dismisses via script. With JavaScript disabled
+that combination is a blank page. A `<noscript>` block hides the preloader and
+forces entrance states visible — scoped so it never touches the scripted path.
 
-1. Go to [vercel.com/new](https://vercel.com/new) and sign in with GitHub.
-2. **Import** the repository you just pushed.
-3. Vercel auto-detects Next.js — leave every setting at its default.
-4. Click **Deploy**.
+### Chart colours were validated, not chosen by eye
 
-You'll get a `*.vercel.app` URL in about a minute. Every later `git push` to
-`main` redeploys automatically.
+Figures use `#6e56f8` and `#0ea5c4`. The site's own accent tints (`iris-400`,
+`aqua-400`) were the natural pick and failed: ΔE 11.6 apart in normal vision —
+below the readability floor — and outside the lightness band for a dark surface.
+The pair in use passes lightness band, chroma floor, CVD separation (ΔE 16.8
+deuteranopia) and contrast.
 
-### One thing to do after the first deploy
+Every figure plots a number the underlying project actually reported. Projects with
+no measured result get stat tiles or a structure diagram rather than an invented chart.
 
-Set `url` in `src/lib/content.ts` to your real deployed URL and push again.
-Until you do, the canonical tag, sitemap and social-share metadata will point
-at the placeholder domain.
+### No charting library, no Three.js
 
-**Deploying from the CLI instead:**
+The figures are a handful of bars, cells and proportions — hand-built SVG, since a
+charting dependency would render them no better. The background is a capped
+canvas-2D field (≤84 particles, DPR capped at 1.5, paused when hidden, skipped on
+touch and for reduced motion) rather than WebGL, which would add ~150KB to a page
+whose point is being fast.
 
-```bash
-npx vercel --prod
-```
+### Accessibility is enforced, not assumed
+
+Every step of the type scale clears WCAG AA (4.5:1) against the page background —
+the muted steps originally sat at 2.95:1 and were rebalanced. Verified on the
+production build: zero contrast failures, one `h1` per page, no heading-level skips,
+every control labelled, tap targets ≥24px, no horizontal overflow at 375/768/desktop.
+
+Reduced motion is handled per primitive — each wrapper renders a static element —
+rather than relying on a global CSS override, so `prefers-reduced-motion` yields a
+calm, fully functional site instead of a broken one.
+
+### Contact form is honest about being static
+
+No backend, so the form validates input and hands off a pre-filled `mailto:` rather
+than pretending to POST somewhere.
 
 ---
 
-## How it's built
+## Structure
 
 ```
 src/
-├─ app/
-│  ├─ layout.tsx            Fonts, metadata, JSON-LD, shell composition
-│  ├─ page.tsx              Section order
-│  ├─ globals.css           Design tokens + custom Tailwind utilities
-│  ├─ opengraph-image.tsx   Generated social card
-│  ├─ icon.tsx              Generated favicon
-│  ├─ sitemap.ts robots.ts manifest.ts
+├─ app/                 8 static routes + /projects/[slug] case studies,
+│                       per-page metadata, generated OG image and icons,
+│                       sitemap, robots, manifest
 ├─ components/
-│  ├─ background/           Aurora backdrop + canvas constellation
-│  ├─ layout/               Navbar, Footer, Preloader, ScrollProgress
-│  ├─ providers/            Lenis smooth-scroll provider
-│  ├─ sections/             One file per page section
-│  └─ ui/                   Reveal, Button, GlassCard, Magnetic, …
-├─ hooks/                   useInViewport, useActiveSection, useFinePointer
-└─ lib/                     content.ts (all copy), motion.ts, accents.ts
+│  ├─ background/       CSS aurora + canvas constellation
+│  ├─ charts/           Hand-built SVG figures
+│  ├─ layout/           Navbar, Footer, Preloader, ScrollProgress
+│  ├─ providers/        Lenis smooth-scroll
+│  ├─ sections/         One file per page section
+│  └─ ui/               Reveal, Button, GlassCard, Magnetic, …
+├─ hooks/               useInViewport, useFinePointer
+└─ lib/                 content.ts — all copy; motion.ts; accents.ts
 ```
 
-### Design system
-
-All colour, spacing, easing and animation tokens are declared once in
-`src/app/globals.css` under `@theme`. The palette is intentionally small:
-`ink` surfaces, `mist` type, and three accents (`iris`, `aqua`, `mint`).
-
-Every step of the `mist` type scale clears **WCAG AA (4.5:1)** on the page
-background, so muted text stays readable.
-
-### Motion
-
-- **Framer Motion (`motion`)** — scroll reveals, layout animations, springs.
-- **GSAP** — the preloader timeline and the scrubbed education timeline,
-  where a shared clock and scroll-linked progress are genuinely easier.
-- **Lenis** — smooth scrolling, with in-page anchors handled by one delegated
-  listener.
-
-Scroll reveals use a geometry-based `useInViewport` hook rather than
-`IntersectionObserver`. IO callbacks stop firing when a page isn't
-compositing, which can strand a one-shot reveal at `opacity: 0`; a
-`getBoundingClientRect` check has no such dependency.
-
-**Reduced motion** is handled at the primitive level — each wrapper renders a
-static element rather than relying on a global CSS override — so
-`prefers-reduced-motion` produces a calm, fully functional site.
-
-There's also a `<noscript>` fallback: with JavaScript disabled the preloader
-is hidden and all entrance states are forced visible, so the page stays
-readable.
-
-### Notes on a few decisions
-
-- **No Three.js.** The interactive background is a capped canvas-2D
-  constellation (≤84 particles, DPR capped at 1.5, paused when the tab is
-  hidden, skipped entirely on touch and for reduced-motion). WebGL wouldn't
-  render this any better and would add ~150KB to a page whose point is speed.
-- **The contact form uses `mailto:`.** This is a static site with no backend,
-  so the form validates input and hands off a pre-filled message rather than
-  pretending to POST somewhere. To wire up a real endpoint, replace the
-  submit handler in `src/components/sections/Contact.tsx`.
-- **Skills show tiers, not percentages.** A "92%" on a skill bar is
-  unverifiable and is the clearest tell of a template portfolio.
+All copy lives in [`src/lib/content.ts`](src/lib/content.ts). Adding a project or a
+skill is a data edit; no component changes.
 
 ---
 
-## Tech
+## Deployment
 
-Next.js 16 · React 19 · TypeScript · Tailwind CSS v4 · Framer Motion · GSAP ·
-Lenis · Lucide
+Deploys on Vercel with zero configuration; every push to `main` redeploys.
+`site.url` in `content.ts` drives the canonical tag, Open Graph tags, sitemap and
+`robots.txt`.

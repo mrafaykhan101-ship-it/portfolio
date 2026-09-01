@@ -30,8 +30,8 @@ export function Footer() {
             </Link>
 
             <p className="mt-5 text-[0.9375rem] leading-relaxed text-mist-400">
-              {site.tagline} Currently studying Financial Technology in Karachi and
-              looking for the internship where that gets put to work.
+              {site.tagline} Financial Technology undergraduate in Karachi, working
+              across machine learning, statistical research and financial modelling.
             </p>
 
             <p className="mt-5 inline-flex items-center gap-2 text-sm text-mist-400">

@@ -14,7 +14,7 @@ export const site = {
   role: "Financial Technology Student",
   tagline: "Building at the intersection of finance, code and intelligence.",
   description:
-    "Muhammad Rafay Khan — Financial Technology student at Mohammad Ali Jinnah University, Karachi. Hands-on with machine learning, statistical analysis, Islamic finance structuring and database design. Open to internships in FinTech, insurtech, data and applied AI.",
+    "Muhammad Rafay Khan — Financial Technology student at Mohammad Ali Jinnah University, Karachi. Work spanning financial machine learning, statistical research, Islamic finance structuring and relational data modelling.",
   location: "Karachi, Pakistan",
   email: "mrafaykhan076@gmail.com",
   phone: "+92 334 3416430",
@@ -29,7 +29,7 @@ export const site = {
   // Share-tracking query params stripped — this is the canonical profile URL.
   linkedin: "https://www.linkedin.com/in/muhammad-rafay-khan-27b298421",
   resumePath: "/Muhammad-Rafay-Khan-Resume.pdf",
-  availability: "Open to Summer 2026 internships",
+  availability: "Google-Certified Data Analyst",
   /**
    * Drop a square-ish photo in `/public` and set this to e.g. "/portrait.jpg".
    * While it's `null` the hero renders a designed monogram card instead.
@@ -38,7 +38,7 @@ export const site = {
 } as const;
 
 export const heroLede =
-  "I'm a Financial Technology undergraduate in Karachi who builds machine-learning models on market data, structures Islamic finance deals, and designs the databases underneath. Five semesters in, and looking for the internship where that mix gets put to work — in FinTech, insurtech, data or applied AI.";
+  "I'm a Financial Technology undergraduate in Karachi who builds machine-learning models on market data, structures Islamic finance deals, and designs the databases underneath. Every project here is documented end to end — the approach, the numbers it produced, and what those numbers don't show.";
 
 /* ------------------------------------------------------------------- nav */
 
@@ -47,7 +47,7 @@ export const navLinks = [
   { id: "education", label: "Education" },
   { id: "skills", label: "Skills" },
   { id: "projects", label: "Projects" },
-  { id: "experience", label: "Experience" },
+  { id: "experience", label: "Approach" },
   { id: "goals", label: "Goals" },
   { id: "contact", label: "Contact" },
 ] as const;
@@ -545,29 +545,29 @@ export type ExperienceEntry = {
   points: string[];
 };
 
-/** Empty until the first role lands — the section renders an intentional
- *  "what I'm looking for" state instead of a blank block. */
+/** No professional roles yet. The section describes how the work gets done
+ *  instead of leaving a blank block. */
 export const experience: ExperienceEntry[] = [];
 
-export const experienceSeeking = {
-  heading: "No professional experience yet — and I'd like that to change.",
-  body: "I'm looking for my first internship. Here's what I can contribute from day one.",
+export const workApproach = {
+  heading: "How I work",
+  body: "No professional roles yet — everything below comes out of academic project work. This is the method behind it.",
   offering: [
     {
-      title: "Python, ML & data",
-      body: "Feature engineering, model building and data cleaning — shipped on real datasets.",
+      title: "Test it honestly",
+      body: "Walk-forward validation over a single split; reliability tested before the data is trusted. A result that only holds in-sample isn't a result.",
     },
     {
-      title: "Financial analysis",
-      body: "Statement analysis, cost calculations and Excel modelling.",
+      title: "Look before modelling",
+      body: "Distributions, outliers and correlation structure first — then a model. Scaling before any distance-based method.",
     },
     {
-      title: "Research & documentation",
-      body: "Survey design, statistical testing and analysis written up clearly.",
+      title: "Cross-check the explanation",
+      body: "Feature importance read three ways — SHAP, permutation, MDI — because one ranking on its own is a guess.",
     },
     {
-      title: "A fast learning curve",
-      body: "Precise questions, feedback taken literally, systems understood rather than patched.",
+      title: "State the limits",
+      body: "Every result here ships with what it doesn't show. A number without its caveat isn't evidence.",
     },
   ],
   targets: [
@@ -740,8 +740,8 @@ export const goals = {
     },
     {
       horizon: "2026",
-      title: "Land a FinTech or insurtech internship",
-      body: "Join an engineering, data or product team in payments, digital banking, insurtech or markets — and learn how production financial systems are really built and maintained.",
+      title: "Build against production constraints",
+      body: "Move past coursework datasets to problems with real messiness — latency, dirty inputs, and decisions that carry consequences.",
       accent: "aqua" as const,
     },
     {
@@ -767,7 +767,7 @@ export const contactChannels = [
     label: "Email",
     value: site.email,
     href: `mailto:${site.email}`,
-    hint: "Best for internships and opportunities",
+    hint: "Fastest way to reach me",
   },
   {
     id: "phone",
@@ -781,7 +781,7 @@ export const contactChannels = [
     label: "Location",
     value: site.location,
     href: null,
-    hint: "Open to remote and hybrid",
+    hint: "Works remote and hybrid",
   },
 ] as const;
 

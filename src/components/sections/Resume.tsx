@@ -35,12 +35,12 @@ export function Resume() {
 
                 <h2 className="mt-5 text-[clamp(1.75rem,3.6vw,2.5rem)] leading-tight font-semibold text-mist-50">
                   Everything on one page,
-                  <br className="hidden sm:block" /> ready when you are.
+                  <br className="hidden sm:block" /> if you prefer it that way.
                 </h2>
 
                 <p className="mt-4 max-w-md text-[0.9375rem] leading-relaxed text-mist-300">
-                  Projects, skills and education in a clean, recruiter-friendly PDF.
-                  Take it with you, or reach out and let&apos;s talk.
+                  Projects, methods and education on a single page. Take it with
+                  you, or read the full case studies here first.
                 </p>
 
                 <div className="mt-8 flex flex-wrap items-center gap-3">

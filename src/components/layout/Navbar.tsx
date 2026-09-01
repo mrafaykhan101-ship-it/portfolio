@@ -127,7 +127,7 @@ export function Navbar() {
                 <ArrowUpRight className="size-4 transition-transform duration-300 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5" />
               }
             >
-              Hire me
+              Contact
             </Button>
 
             <button

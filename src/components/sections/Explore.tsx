@@ -46,8 +46,8 @@ const routes: {
   },
   {
     href: "/experience",
-    label: "Experience & Achievements",
-    blurb: "Measured results and eight verified Google Data Analytics certifications.",
+    label: "Approach & Results",
+    blurb: "How the work is done, the results it produced, and eight verified credentials.",
     Icon: BadgeCheck,
     accent: "aqua",
   },
@@ -68,7 +68,7 @@ const routes: {
   {
     href: "/contact",
     label: "Contact & Résumé",
-    blurb: "Hiring for an internship? Here's the fastest way to reach me.",
+    blurb: "Reach me directly, or take the résumé with you.",
     Icon: Mail,
     accent: "iris",
   },

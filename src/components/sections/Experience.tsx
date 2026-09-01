@@ -1,13 +1,13 @@
-import { Briefcase, Compass, Target } from "lucide-react";
+import { FlaskConical, Layers, Target } from "lucide-react";
 import { Section, SectionHeading } from "@/components/ui/Section";
 import { Reveal, Stagger, StaggerItem } from "@/components/ui/Reveal";
 import { GlassCard } from "@/components/ui/GlassCard";
-import { experience, experienceSeeking } from "@/lib/content";
+import { experience, workApproach } from "@/lib/content";
 
 /**
- * Renders real roles when they exist; until then, an intentional "open to
- * work" state that reframes the absence of experience as a clear pitch rather
- * than a blank section.
+ * Renders real roles once `experience` has entries. Until then it documents
+ * the method behind the project work rather than leaving a blank section or
+ * advertising availability.
  */
 export function Experience() {
   const hasExperience = experience.length > 0;
@@ -15,16 +15,16 @@ export function Experience() {
   return (
     <Section id="experience">
       <SectionHeading
-        eyebrow="Experience"
+        eyebrow="Approach"
         title={
           <>
-            The <span className="text-gradient">next chapter</span>
+            How the work <span className="text-gradient">gets done</span>
           </>
         }
         lede={
           hasExperience
             ? "Where I've worked and what I shipped."
-            : experienceSeeking.body
+            : workApproach.body
         }
       />
 
@@ -36,15 +36,15 @@ export function Experience() {
           <div>
             <div className="mb-6 flex items-center gap-2.5">
               <span className="grid size-9 place-items-center rounded-xl bg-iris-500/12 text-iris-300 ring-1 ring-iris-500/20">
-                <Briefcase className="size-4" aria-hidden />
+                <FlaskConical className="size-4" aria-hidden />
               </span>
               <h3 className="text-lg font-semibold text-mist-50">
-                What I bring on day one
+                Method
               </h3>
             </div>
 
             <Stagger className="grid gap-4 sm:grid-cols-2" gap={0.08}>
-              {experienceSeeking.offering.map((item) => (
+              {workApproach.offering.map((item) => (
                 <StaggerItem key={item.title}>
                   <GlassCard className="h-full p-5" glow={false} spotlight={false}>
                     <h4 className="text-[0.9375rem] font-semibold text-mist-50">
@@ -59,7 +59,7 @@ export function Experience() {
             </Stagger>
           </div>
 
-          {/* Where I'm aiming */}
+          {/* Domains */}
           <Reveal delay={0.1}>
             <GlassCard className="h-full p-6" spotlight>
               <div className="mb-5 flex items-center gap-2.5">
@@ -67,12 +67,12 @@ export function Experience() {
                   <Target className="size-4" aria-hidden />
                 </span>
                 <h3 className="text-lg font-semibold text-mist-50">
-                  Where I&apos;m aiming
+                  Domains I work in
                 </h3>
               </div>
 
               <ul className="flex flex-wrap gap-2">
-                {experienceSeeking.targets.map((target) => (
+                {workApproach.targets.map((target) => (
                   <li
                     key={target}
                     className="rounded-full border border-mist-50/10 bg-mist-50/4 px-3 py-1.5 text-[0.8125rem] font-medium text-mist-200"
@@ -82,11 +82,11 @@ export function Experience() {
                 ))}
               </ul>
 
-              <div className="mt-6 flex items-start gap-3 rounded-2xl border border-mint-500/20 bg-mint-500/6 p-4">
-                <Compass className="mt-0.5 size-4 shrink-0 text-mint-300" aria-hidden />
+              <div className="mt-6 flex items-start gap-3 rounded-2xl border border-mist-50/10 bg-mist-50/4 p-4">
+                <Layers className="mt-0.5 size-4 shrink-0 text-mist-400" aria-hidden />
                 <p className="text-[0.8125rem] leading-relaxed text-mist-300">
-                  Available for internships and part-time roles — remote, hybrid or
-                  on-site in Karachi. Happy to start with a trial task.
+                  Each project below sits in one of these, and each is documented
+                  with its method, its result and its limits.
                 </p>
               </div>
             </GlassCard>

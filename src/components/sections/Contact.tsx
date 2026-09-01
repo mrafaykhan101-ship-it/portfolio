@@ -65,10 +65,10 @@ export function Contact() {
         align="center"
         title={
           <>
-            Let&apos;s build something <span className="text-gradient">together</span>
+            Get in <span className="text-gradient">touch</span>
           </>
         }
-        lede="Looking for an intern who can code and read a balance sheet? I'd love to hear from you. The fastest way to reach me is below."
+        lede="Questions about the methodology behind any project, or the code that produced it — the fastest ways to reach me are below."
       />
 
       <div className="mx-auto mt-14 grid max-w-5xl gap-6 lg:grid-cols-[0.9fr_1.1fr]">
